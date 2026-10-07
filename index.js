@@ -1,101 +1,90 @@
-const express = require ('express');
-
+const express = require('express');
 const app = express();
+const PORT = 3000;
 
-app.use(express.json());  // Middleware to read JSON bodies
-
-// Route
-// const express = require('express');     // Load express
-// const app = express();                 // Create express app
-// const PORT = 3000;                     // Choose a port
-
-// app.get('/', (req, res) => {
-//   res.send('Hello from Express!');
-// });
-
-// app.listen(PORT, () => {
-//   console.log(`Server running on http://localhost:${PORT}`);
-// });
-
-// Get route
-app.get('/', (req, res) => {
-    res.send('hello from express!')
-});
-
-app.get('/admin', (req,res) => {
-    res.send('Now you are in admin page ')
-})
-
-// POST route
-
-// app.post('/users', (req, res) => {
-//     // Getting user data 
-//   const userData = req.body;
-//   res.send(`User created with name: ${userData.name}`);
-// });
-
-app.listen(3000, ()=>{
-    console.log('server is runing on http//:localhost:3000')
-})
-
-// Put reoute 
-// PUT route
-
-// app.put('/users/1', (req, res) => {
-//   const userId = req.params.id;
-//   const updatedData = req.body;
-//   res.send(`User ${userId} updated with name: ${updatedData.name}`);
-// });
+app.use(express.json());
 
 
-
-// ============================================
-
-// Sample in-memory data
-let users = [
-  { id: 1, name: 'Ayaan' },
-  { id: 2, name: 'Fatima' },
-  { id: 3, name: 'Zubeyr' }
+let books = [
+  { id: 1, title: 'Atomic Habits', author: 'James Clear' },
+  { id: 2, title: 'Deep Work', author: 'Cal Newport' }
 ];
 
 
-app.post('/users', (req, res) => {
-  const newUser = {
-    id: users.length + 1,
-    name: req.body.name
+
+
+app.get('/books', (req, res) => {
+  const { author } = req.query;
+  if (author) {
+    const filteredBooks = books.filter(b => 
+      b.author.toLowerCase().includes(author.toLowerCase())
+    );
+    return res.json(filteredBooks);
+  }
+  res.json(books)
+})
+
+
+
+
+app.get('/books/:id', (req, res) => {
+  const book = books.find(b => b.id === parseInt(req.params.id));
+  if (!book) {
+    return res.status(404).json({ error: 'The book is not there ' });
+  }
+  res.json(book);
+})
+
+
+
+app.post('/books', (req, res) => {
+  const { title, author } = req.body;
+  
+  if (!title || !author) {
+    return res.status(400).json({ error: 'Title and wrtiter are required.' });
+  }
+
+  const newBook = {
+    id: books.length > 0 ? books[books.length - 1].id + 1 : 1,
+    title,
+    author
   };
-  users.push(newUser);
-  res.status(201).json(newUser);
+
+  books.push(newBook);
+  res.status(201).json(newBook);
 });
 
 
-// Read
 
+// Update 
 
-// all 
-app.get('/users', (req, res) => {
-  res.json(users);
+app.put('/books/:id', (req, res) => {
+  const book = books.find(b => b.id === parseInt(req.params.id));
+  if (!book) {
+    return res.status(404).json({ error: 'The book is not there' });
+  }
+
+  const { title } = req.body;
+  if (!title) {
+    return res.status(400).json({ error: 'New title is required  update.' });
+  }
+
+  book.title = title;
+  res.json(book);
 });
 
-// one 
-app.get('/users/:id', (req, res) => {
-  const user = users.find(u => u.id == req.params.id);
-  if (!user) return res.status(404).send('User not found');
-  res.json(user);
+// Delete
+app.delete('/books/:id', (req, res) => {
+  const bookIndex = books.findIndex(b => b.id === parseInt(req.params.id));
+  if (bookIndex === -1) {
+    return res.status(404).json({ error: 'The book is not there' });
+  }
+
+  const deletedBook = books.splice(bookIndex, 1);
+  res.json({ message: 'Book is deleted', book: deletedBook[0] });
 });
 
 
-// update 
-app.put('/users/:id', (req, res) => {
-  const user = users.find(u => u.id == req.params.id);
-  if (!user) return res.status(404).send('User not found');
-  user.name = req.body.name;
-  res.json(user);
-});
-
-
-// Delete User 
-app.delete('/users/:id', (req, res) => {
-  users = users.filter(u => u.id != req.params.id);
-  res.send('User deleted');
+app.listen(PORT, () => {
+  console.log(`Server is running at http://localhost:${PORT}`);
 });
