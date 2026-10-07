@@ -8,9 +8,7 @@ app.use(express.json());
 let books = [
   { id: 1, title: 'Atomic Habits', author: 'James Clear' },
   { id: 2, title: 'Deep Work', author: 'Cal Newport' }
-];
-
-
+]
 
 
 app.get('/books', (req, res) => {
@@ -74,6 +72,7 @@ app.put('/books/:id', (req, res) => {
 });
 
 // Delete
+
 app.delete('/books/:id', (req, res) => {
   const bookIndex = books.findIndex(b => b.id === parseInt(req.params.id));
   if (bookIndex === -1) {
@@ -87,4 +86,4 @@ app.delete('/books/:id', (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
-});
+})
