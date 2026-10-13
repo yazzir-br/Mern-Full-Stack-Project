@@ -5,14 +5,18 @@
   "license": "ISC",
   "author": "muuse",
   "type": "commonjs",
+  "start": "nodemon index.js",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon index.js"
   },
   "dependencies": {
-    "express": "^5.2.1"
+    "dotenv": "^18.0.7",
+    "express": "^5.3.0",
+    "mongoose": "^9.11.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
   }
 }
-
-
