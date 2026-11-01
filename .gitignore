@@ -1,0 +1,20 @@
+# Existing rules kept
+.env
+
+# Environment files (all variants)
+.env.*
+!.env.example
+*.env
+*.env.*
+!.env.example
+
+# Environment backups and local overrides
+.env.local
+.env.development
+.env.production
+.env.test
+.env.*.local
+
+# Secret keys and certificates
+*.pem
+*.key
