@@ -87,7 +87,7 @@ export default function Profile() {
   const handleImageChange = async (event) => {
     const file = event.target.files?.[0];
 
-    // Allow selecting the same file again after a previous attempt.
+
     event.target.value = '';
 
     if (!file) {
@@ -143,8 +143,7 @@ export default function Profile() {
         );
       }
 
-      // Update the authenticated user in the existing Zustand store.
-      // Keep all other verified user fields unchanged.
+
       setUser({
         ...user,
         profilePicture: imageUrl
@@ -303,7 +302,6 @@ export default function Profile() {
       )}
 
       <section className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
-        {/* <div className="h-28 bg-gradient-to-r from-gray-600 to-gray-600 sm:h-36" /> */}
         <div className="h-28 bg-gray-300 sm:h-36" />
 
 

@@ -19,7 +19,8 @@ export default function Transactions() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [deletingId, setDeletingId] = useState(null);
 
-  // Discovery filters
+
+  // search filters
   const [search, setSearch] = useState('');
   const [typeFilter, setTypeFilter] = useState('all');
   const [categoryFilter, setCategoryFilter] = useState('all');
@@ -31,7 +32,6 @@ export default function Transactions() {
     setError('');
 
     try {
-      // Use only the verified backend pagination parameters.
       const firstResponse = await apiClient.get('/transactions', {
         params: { page: 1, limit: SERVER_PAGE_SIZE },
       });
@@ -51,8 +51,6 @@ export default function Transactions() {
 
       const allTransactions = [...firstData];
 
-      // Load remaining backend pages so client-side filters search
-      // the complete dataset, not just the first page.
       for (let page = 2; page <= totalPages; page += 1) {
         const response = await apiClient.get('/transactions', {
           params: {
@@ -249,7 +247,6 @@ export default function Transactions() {
     setSuccess('');
 
     try {
-      // Verified backend endpoint.
       await apiClient.delete(
         `/transactions/${encodeURIComponent(id)}`
       );

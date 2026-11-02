@@ -169,7 +169,7 @@ export default function Categories() {
         );
       }
 
-      // totalPages = 0 waa sax marka aysan jirin transactions.
+
       if (!Number.isInteger(totalPages) || totalPages < 0) {
         throw new Error(
           'Invalid pagination information from server.'
@@ -178,7 +178,7 @@ export default function Categories() {
 
       const allTransactions = [...firstData];
 
-      // Haddii totalPages = 0 ama 1, bogag kale lama codsanayo.
+
       for (let page = 2; page <= totalPages; page += 1) {
         const response = await apiClient.get('/transactions', {
           params: {

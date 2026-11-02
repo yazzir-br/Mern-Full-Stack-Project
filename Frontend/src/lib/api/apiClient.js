@@ -16,7 +16,6 @@ const apiClient = axios.create({
   timeout: 15000,
 });
 
-// Request interceptor
 apiClient.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
@@ -25,7 +24,6 @@ apiClient.interceptors.request.use(
       config.headers.Authorization = `Bearer ${token}`;
     }
 
-    // Allow the browser to set the correct multipart boundary.
     if (config.data instanceof FormData) {
       if (typeof config.headers.delete === 'function') {
         config.headers.delete('Content-Type');
@@ -40,7 +38,7 @@ apiClient.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Response interceptor
+
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {

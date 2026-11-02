@@ -26,7 +26,7 @@ export const getAdminOverview = async (req, res, next) => {
       ]),
 
       Transaction.aggregate([
-        // Include expenses only; income is not spending.
+        
         {
           $match: {
             type: 'expense'

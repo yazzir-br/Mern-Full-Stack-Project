@@ -55,15 +55,12 @@ export default function RegisterForm({
     }
 
     try {
-      // Confirm password is for frontend validation only.
-      // The backend receives name, email, and password.
       await onSubmit({
         name: normalizedName,
         email: normalizedEmail,
         password,
       });
     } catch {
-      // The parent component should display submission errors.
     }
   };
 

@@ -36,8 +36,8 @@ function getInitialFormData(initialValues) {
   };
 }
 
-// Validate calendar dates using local date components.
-// This avoids timezone-related errors caused by toISOString().
+
+
 function isValidLocalDate(value) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) {
     return false;

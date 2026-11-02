@@ -38,7 +38,6 @@ export const register = async (req, res, next) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Role-ka lagama aqbalo req.body; user cusub mar walba waa user.
     const user = await User.create({
       name: name.trim(),
       email: normalizedEmail,
@@ -76,8 +75,7 @@ export const login = async (req, res, next) => {
       });
     }
 
-    // Schema-gu password-ka wuxuu u dejiyey select: false.
-    // Halkan ayaan si cad ugu soo qaadanaynaa si bcrypt u barbar dhigo.
+    
     const user = await User.findOne({
       email: email.trim().toLowerCase()
     }).select('+password');

@@ -60,7 +60,6 @@ export const protect = async (req, res, next) => {
       });
     }
 
-    // Role-ka waxaa laga keenay database-ka, lagama aaminin JWT-ga.
     req.user = {
       id: user._id.toString(),
       role: user.role

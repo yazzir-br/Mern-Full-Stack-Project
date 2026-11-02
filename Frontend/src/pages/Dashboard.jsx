@@ -74,7 +74,7 @@ async function fetchAllTransactions() {
   const transactions = [...firstPage.data];
   const totalPages = Number(firstPage?.pagination?.totalPages);
 
-  // totalPages = 0 waa sax marka aysan jirin wax transactions ah.
+
   if (
     !Number.isInteger(totalPages) ||
     totalPages < 0

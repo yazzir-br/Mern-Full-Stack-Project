@@ -21,12 +21,11 @@ let shuttingDown = false;
 const env = validateServerEnv();
 const app = express();
 
-// Security headers
+
 app.disable('x-powered-by');
 app.use(helmet());
 
-// CORS configuration
-// Allow the frontend development origins and configured origins.
+
 const configuredOrigins = Array.isArray(env.CORS_ORIGINS)
   ? env.CORS_ORIGINS
   : typeof env.CORS_ORIGINS === 'string'
@@ -42,7 +41,7 @@ const allowedOrigins = new Set([
 app.use(
   cors({
     origin(origin, callback) {
-      // Requests without an Origin header may come from local tools.
+
       if (!origin || allowedOrigins.has(origin)) {
         return callback(null, true);
       }
@@ -58,25 +57,21 @@ app.use(
   })
 );
 
-// Request body parsing
 app.use(express.json({ limit: '1mb' }));
 
-// Development logging
 if (env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
-// API documentation
+
 app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-// API routes
 app.use('/api/health', healthRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/transactions', transactionRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/admin', adminRoutes);
 
-// 404 handler
 app.use((req, res) => {
   return res.status(404).json({
     success: false,
@@ -84,7 +79,7 @@ app.use((req, res) => {
   });
 });
 
-// Central error handler
+
 app.use((err, req, res, next) => {
   if (err.message === 'Origin not allowed by CORS') {
     return res.status(403).json({
@@ -96,7 +91,7 @@ app.use((err, req, res, next) => {
   return errorHandler(err, req, res, next);
 });
 
-// Close HTTP server
+
 async function closeHttpServer() {
   if (!server) {
     return;
@@ -116,7 +111,7 @@ async function closeHttpServer() {
   });
 }
 
-// Graceful shutdown
+
 async function shutdown(signal, exitCode = 0) {
   if (shuttingDown) {
     return;
@@ -152,7 +147,7 @@ process.once('SIGTERM', () => {
   void shutdown('SIGTERM');
 });
 
-// Start server
+
 async function startServer() {
   try {
     await mongoose.connect(env.MONGO_URI, {

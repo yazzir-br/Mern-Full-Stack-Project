@@ -44,7 +44,7 @@ export default function LoginForm({
         password,
       });
     } catch {
-      // The parent component handles API errors.
+
     }
   };
 

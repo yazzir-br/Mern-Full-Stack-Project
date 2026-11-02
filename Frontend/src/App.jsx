@@ -72,6 +72,7 @@ function App() {
 
   return (
     <Routes>
+      
       {/* Public routes */}
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
@@ -93,6 +94,7 @@ function App() {
           </Route>
         </Route>
       </Route>
+
 
       {/* Default route */}
       <Route
