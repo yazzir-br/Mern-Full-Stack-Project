@@ -67,22 +67,7 @@ export default function Register() {
 
         {/* Header */}
         <div className="mb-8 text-center">
-          <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-50 text-blue-700">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              className="h-7 w-7"
-              aria-hidden="true"
-            >
-              <rect x="3" y="5" width="18" height="14" rx="3" />
-              <path d="M3 10h18M7 15h3" />
-            </svg>
-          </div>
-
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+          <h1 className="text-2xl mt-8 font-bold tracking-tight text-slate-900 sm:text-3xl">
             Create an Account
           </h1>
 
